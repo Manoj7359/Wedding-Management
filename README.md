@@ -34,3 +34,6 @@ wedding-event-manager
 
 ## License
 This project is licensed under the MIT License.
+
+## 🌐 Live Demo
+[🔗 Click Here to View Live Project](http://chipper-eclair-c6454f.netlify.app)
