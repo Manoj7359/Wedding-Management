@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NANDIBOYINA JAYACHANDRA </title>
+  <style>
+    :root {
+      --bg: #fff8f3;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #c2410c;
+      --primary-soft: #ffedd5;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --border: #f1d7c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, #ffe7d4 0%, rgba(255, 231, 212, 0) 36%),
+        radial-gradient(circle at bottom left, #ffe4ef 0%, rgba(255, 228, 239, 0) 32%),
+        var(--bg);
+      color: var(--text);
+    }
+    header {
+      background:
+        linear-gradient(120deg, rgba(194, 65, 12, 0.92), rgba(190, 24, 93, 0.88)),
+        url("https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1600&q=80") center/cover;
+      color: #fff;
+      padding: 32px 20px;
+      text-align: center;
+      position: relative;
+    }
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; opacity: 0.95; }
+    .wrap { max-width: 1200px; margin: 20px auto 40px; padding: 0 16px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 4px 14px rgba(194, 65, 12, 0.08); padding: 16px; }
+    .card h2 { margin: 0 0 12px; font-size: 20px; color: #111827; }
+    .muted { color: var(--muted); font-size: 13px; }
+    .full { grid-column: 1 / -1; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+    .stat { background: #fafafa; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+    .stat h3 { margin: 0; font-size: 14px; color: var(--muted); }
+    .stat p { margin: 8px 0 0; font-size: 22px; font-weight: bold; }
+    .timeline { margin: 12px 0 0; padding-left: 18px; }
+    .timeline li { margin: 6px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px; text-align: left; }
+    th { background: #fafafa; }
+    input, select, textarea, button { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d1d5db; margin: 6px 0 12px; font-size: 14px; }
+    textarea { min-height: 68px; resize: vertical; }
+    button { cursor: pointer; border: none; background: var(--primary); color: #fff; font-weight: 600; transition: 0.2s; }
+    button:hover { filter: brightness(0.95); }
+    .grid-2 { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+    .badge { padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; display: inline-block; }
+    .confirmed { background: #dcfce7; color: #166534; }
+    .pending { background: #fef9c3; color: #854d0e; }
+    .declined { background: #fee2e2; color: #991b1b; }
+    .menu-item { display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 8px; }
+    .progress-wrap { margin-bottom: 12px; }
+    .progress-head { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px; }
+    .progress { height: 11px; background: #e5e7eb; border-radius: 999px; overflow: hidden; }
+    .bar { height: 100%; width: 0; background: #10b981; }
+    .event { border: 1px solid var(--border); border-left: 5px solid var(--primary); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: #fcfbff; }
+    .checklist label { display: block; margin: 6px 0; font-size: 14px; }
+    .checklist input[type="checkbox"] { width: auto; margin-right: 8px; transform: translateY(1px); }
+    .small-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .qr-pass { margin-top: 12px; padding: 10px; border: 1px dashed #c4b5fd; border-radius: 10px; background: #faf5ff; display: none; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .photo-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(2, 6, 23, 0.06);
+    }
+    .photo-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-card p {
+      margin: 0;
+      padding: 8px 10px;
+      font-size: 13px;
+      color: #7c2d12;
+      font-weight: 700;
+      background: #fff7ed;
+    }
+    .featured-stage {
+      border: 2px solid #f59e0b;
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.25);
+    }
+    .stage-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(90deg, #b45309, #ea580c);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 4px 10px;
+      letter-spacing: 0.2px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NANDIBOYINA JAYACHANDRA MARRIAGE PLANNING AND MANAGEMENT</h1>
+    <p>Total Budget: ₹10,00,000 | Smart planning for guests, food, events, and expenses</p>
+  </header>
+  <main class="wrap">
+    <section class="card full">
+      <h2>Wedding Moments Gallery</h2>
+      <div class="photo-grid">
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80" alt="Bride and groom portrait">
+          <p>Couple Portrait</p>
+        </div>
+        <div class="photo-card featured-stage">
+          <span class="stage-tag">Premium Decor</span>
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80" alt="Grand wedding stage decoration with lights">
+          <p>Grand Stage Decor - LED Floral Theme</p>
+        </div>
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80" alt="Bride with floral styling">
+          <p>Bride Floral Look</p>
+        </div>
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Wedding ring and details">
+          <p>Ritual Details</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card full">
+      <h2>Dashboard</h2>
+      <div class="stats">
+        <div class="stat"><h3>Total Guests Registered</h3><p id="statGuests">0</p></div>
+        <div class="stat"><h3>Confirmed RSVP</h3><p id="statConfirmed">0</p></div>
+        <div class="stat"><h3>Budget Used</h3><p id="statBudgetUsed">₹0</p></div>
+        <div class="stat"><h3>Budget Remaining</h3><p id="statBudgetLeft">₹10,00,000</p></div>
+      </div>
+      <ul class="timeline">
+        <li>10:00 AM - Mehendi Setup</li>
+        <li>5:00 PM - Sangeet Rehearsal</li>
+        <li>7:00 PM - Wedding Ceremony</li>
+        <li>9:00 PM - Dinner & Reception</li>
+      </ul>
+    </section>
+
+    <section class="card full">
+      <h2>Event Highlights Photos</h2>
+      <div class="photo-grid">
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80" alt="Mehendi event celebration">
+          <p>Mehendi Celebration</p>
+        </div>
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?auto=format&fit=crop&w=900&q=80" alt="Sangeet dance moment">
+          <p>Sangeet Dance Night</p>
+        </div>
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=900&q=80" alt="Wedding ceremony rituals">
+          <p>Wedding Ritual Moment</p>
+        </div>
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=900&q=80" alt="Reception dinner tables">
+          <p>Reception Dinner Setup</p>
+        </div>
+      </div>
+    </section>
+    <section class="card full">
+      <h2>Guest List</h2>
+      <input id="searchGuest" type="text" placeholder="Search by name / phone / relation">
+      <div style="overflow:auto;">
+        <table>
+          <thead><tr><th>Name</th><th>Phone</th><th>Relation</th><th>Count</th><th>Food</th><th>Drinks</th><th>Table</th><th>RSVP</th></tr></thead>
+          <tbody id="guestTable"></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Register Guest</h2>
+      <input id="name" type="text" placeholder="Guest Name">
+      <input id="phone" type="text" placeholder="Phone Number">
+      <input id="relation" type="text" placeholder="Relation (Family/Friend/Office)">
+      <input id="count" type="number" min="1" placeholder="Group Size">
+      <div class="grid-2">
+        <select id="food"><option>Veg</option><option>Non-Veg</option><option>Vegan</option><option>Jain</option></select>
+        <select id="drinks"><option>Soft Drinks</option><option>Mocktails</option><option>Alcohol (Preference)</option><option>None</option></select>
+      </div>
+      <div class="grid-2">
+        <input id="tableNo" type="text" placeholder="Table Number (e.g., T-07)">
+        <select id="rsvp"><option value="confirmed">Confirmed</option><option value="pending">Pending</option><option value="declined">Declined</option></select>
+      </div>
+      <textarea id="allergy" placeholder="Allergy notes (optional)"></textarea>
+      <button id="addGuestBtn">Add Guest</button>
+      <p class="small-note">After submit, a sample guest pass ID is generated (QR-ready format).</p>
+      <div id="qrPass" class="qr-pass"></div>
+    </section>
+    <section class="card">
+      <h2>Food & Drinks</h2>
+      <div id="menuList"></div>
+      <div class="muted" id="menuCost">Catering Total: ₹0</div>
+    </section>
+    <section class="card">
+      <h2>Budget Tracker</h2>
+      <div id="budgetBars"></div>
+      <h3 style="margin:14px 0 8px;">Add Expense</h3>
+      <select id="expenseCat"><option value="Venue">Venue</option><option value="Catering">Catering</option><option value="Decor">Decor</option><option value="Photography">Photography</option><option value="Entertainment">Entertainment</option><option value="Misc">Misc</option></select>
+      <input id="expenseAmount" type="number" min="1" placeholder="Amount in ₹">
+      <button id="addExpenseBtn">Add Expense</button>
+      <p class="small-note" id="expenseMsg"></p>
+    </section>
+    <section class="card full">
+      <h2>Events & Vendor Checklist</h2>
+      <div class="grid-2">
+        <div>
+          <div class="event"><strong>Mehendi</strong><div class="muted">Day 1 | 11:00 AM</div></div>
+          <div class="event"><strong>Sangeet</strong><div class="muted">Day 1 | 7:00 PM</div></div>
+          <div class="event"><strong>Wedding</strong><div class="muted">Day 2 | 6:30 PM</div></div>
+          <div class="event"><strong>Reception</strong><div class="muted">Day 2 | 9:00 PM</div></div>
+        </div>
+        <div class="checklist">
+          <label><input type="checkbox" checked>Venue booked</label>
+          <label><input type="checkbox" checked>Catering confirmed</label>
+          <label><input type="checkbox">DJ / sound finalized</label>
+          <label><input type="checkbox" checked>Photography team booked</label>
+          <label><input type="checkbox">Transport arrangement</label>
+          <label><input type="checkbox">Guest welcome kits packed</label>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const TOTAL_BUDGET = 1000000;
+    const guests = [
+      { name: "K.Mohan", phone: "9876543210", relation: "Mawa", count: 4, food: "Veg", drinks: "Soft Drinks", table: "T-01", rsvp: "confirmed", allergy: "" },
+      { name: "N.Muni", phone: "9876543201", relation: "Family", count: 2, food: "Non-Veg", drinks: "Mocktails", table: "T-03", rsvp: "pending", allergy: "No peanuts" },
+      { name: "Deva", phone: "9876543202", relation: "Friend", count: 3, food: "Non-Veg", drinks: "Alcohol (Preference)", table: "T-05", rsvp: "confirmed", allergy: "" }
+    ];
+    const budget = {
+      Venue: { limit: 250000, used: 220000 },
+      Catering: { limit: 300000, used: 180000 },
+      Decor: { limit: 150000, used: 120000 },
+      Photography: { limit: 120000, used: 90000 },
+      Entertainment: { limit: 100000, used: 60000 },
+      Misc: { limit: 80000, used: 30000 }
+    };
+    const menu = [
+      { item: "Paneer Butter Masala", qty: 180, cost: 36000 },
+      { item: "Biryani", qty: 140, cost: 42000 },
+      { item: "Jain Special Thali", qty: 70, cost: 17500 },
+      { item: "Mocktail Counter", qty: 250, cost: 30000 },
+      { item: "Soft Drinks", qty: 320, cost: 16000 },
+      { item: "Premium Beverage Setup", qty: 130, cost: 45000 }
+    ];
+    function formatINR(num) { return "₹" + Number(num).toLocaleString("en-IN"); }
+    function totalGuestCount() { return guests.reduce((sum, g) => sum + g.count, 0); }
+    function confirmedCount() { return guests.filter(g => g.rsvp === "confirmed").reduce((sum, g) => sum + g.count, 0); }
+    function budgetUsed() { return Object.values(budget).reduce((sum, b) => sum + b.used, 0); }
+    function renderDashboard() {
+      const used = budgetUsed();
+      document.getElementById("statGuests").textContent = totalGuestCount();
+      document.getElementById("statConfirmed").textContent = confirmedCount();
+      document.getElementById("statBudgetUsed").textContent = formatINR(used);
+      document.getElementById("statBudgetLeft").textContent = formatINR(Math.max(TOTAL_BUDGET - used, 0));
+    }
+    function rsvpBadge(type) {
+      if (type === "confirmed") return '<span class="badge confirmed">CONFIRMED</span>';
+      if (type === "declined") return '<span class="badge declined">DECLINED</span>';
+      return '<span class="badge pending">PENDING</span>';
+    }
+    function renderGuests(filterText = "") {
+      const tbody = document.getElementById("guestTable");
+      tbody.innerHTML = "";
+      const text = filterText.trim().toLowerCase();
+      const filtered = guests.filter(g => (g.name + " " + g.phone + " " + g.relation).toLowerCase().includes(text));
+      for (const g of filtered) {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${g.name}</td><td>${g.phone}</td><td>${g.relation}</td><td>${g.count}</td><td>${g.food}</td><td>${g.drinks}</td><td>${g.table}</td><td>${rsvpBadge(g.rsvp)}</td>`;
+        tbody.appendChild(row);
+      }
+    }
+    function renderMenu() {
+      const container = document.getElementById("menuList");
+      container.innerHTML = "";
+      let total = 0;
+      for (const m of menu) {
+        total += m.cost;
+        const row = document.createElement("div");
+        row.className = "menu-item";
+        row.innerHTML = `<div><strong>${m.item}</strong><br><span class="muted">Qty: ${m.qty}</span></div><div>${formatINR(m.cost)}</div>`;
+        container.appendChild(row);
+      }
+      document.getElementById("menuCost").textContent = "Catering Total: " + formatINR(total);
+    }
+    function renderBudgetBars() {
+      const box = document.getElementById("budgetBars");
+      box.innerHTML = "";
+      for (const [name, data] of Object.entries(budget)) {
+        const pct = Math.min((data.used / data.limit) * 100, 100);
+        const barColor = pct > 90 ? "#dc2626" : pct > 70 ? "#d97706" : "#16a34a";
+        const wrap = document.createElement("div");
+        wrap.className = "progress-wrap";
+        wrap.innerHTML = `<div class="progress-head"><span>${name}</span><span>${formatINR(data.used)} / ${formatINR(data.limit)}</span></div><div class="progress"><div class="bar" style="width:${pct}%; background:${barColor};"></div></div>`;
+        box.appendChild(wrap);
+      }
+    }
+    function addGuest() {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const relation = document.getElementById("relation").value.trim();
+      const count = Number(document.getElementById("count").value);
+      const food = document.getElementById("food").value;
+      const drinks = document.getElementById("drinks").value;
+      const tableNo = document.getElementById("tableNo").value.trim() || "TBD";
+      const rsvp = document.getElementById("rsvp").value;
+      const allergy = document.getElementById("allergy").value.trim();
+      if (!name || !phone || !relation || !Number.isInteger(count) || count <= 0) {
+        alert("Please fill name, phone, relation and valid group size.");
+        return;
+      }
+      guests.push({ name, phone, relation, count, food, drinks, table: tableNo, rsvp, allergy });
+      renderGuests(document.getElementById("searchGuest").value);
+      renderDashboard();
+      const passCode = "WED-" + Date.now().toString().slice(-6);
+      const pass = document.getElementById("qrPass");
+      pass.style.display = "block";
+      pass.innerHTML = `
+        <strong>Guest Pass Created</strong><br>
+        Name: ${name} (${count})<br>
+        Pass ID: <strong>${passCode}</strong><br>
+        <div id="qrcode"></div>
+      `;
+      new QRCode(document.getElementById("qrcode"), {
+        text: `${name}|${phone}|${passCode}`,
+        width: 150,
+        height: 150
+      });
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("relation").value = "";
+      document.getElementById("count").value = "";
+      document.getElementById("tableNo").value = "";
+      document.getElementById("allergy").value = "";
+      document.getElementById("rsvp").value = "confirmed";
+      document.getElementById("food").selectedIndex = 0;
+      document.getElementById("drinks").selectedIndex = 0;
+    }
+    function addExpense() {
+      const cat = document.getElementById("expenseCat").value;
+      const amt = Number(document.getElementById("expenseAmount").value);
+      const msg = document.getElementById("expenseMsg");
+      if (!Number.isFinite(amt) || amt <= 0) {
+        msg.textContent = "Enter a valid expense amount.";
+        msg.style.color = "#b91c1c";
+        return;
+      }
+      budget[cat].used += amt;
+      const total = budgetUsed();
+      renderBudgetBars();
+      renderDashboard();
+      if (total > TOTAL_BUDGET) {
+        msg.textContent = "Warning: Overall budget exceeded by " + formatINR(total - TOTAL_BUDGET);
+        msg.style.color = "#b91c1c";
+      } else {
+        msg.textContent = "Expense added to " + cat + ". Remaining total budget: " + formatINR(TOTAL_BUDGET - total);
+        msg.style.color = "#166534";
+      }
+      document.getElementById("expenseAmount").value = "";
+    }
+    document.getElementById("addGuestBtn").addEventListener("click", addGuest);
+    document.getElementById("addExpenseBtn").addEventListener("click", addExpense);
+    document.getElementById("searchGuest").addEventListener("input", (e) => renderGuests(e.target.value));
+    renderDashboard();
+    renderGuests();
+    renderMenu();
+    renderBudgetBars();
+  </script>
+</body>
+</html>
